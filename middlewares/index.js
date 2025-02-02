@@ -57,6 +57,6 @@ exports.isNotLoggedIn = (req, res, next) => {
     next();
   } else {
     const message = encodeURIComponent('YouAreLoggedIn.');
-    res.redirect(`/?error=${message}`);
+    res.redirect(`/console`);
   }
 };

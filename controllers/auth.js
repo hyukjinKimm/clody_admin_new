@@ -56,23 +56,50 @@ exports.loginPage = (req, res) => {
       </style>
     </head>
     <body>
-      <div class="login-container">
-        <h2>Clody 어드민</h2>
-        <form action="/login" method="POST">
-          <label for="id">ID</label>
-          <input type="text" id="id" name="id" required>
+  <div class="login-container">
+    <h2>Clody 어드민</h2>
+    <form id="loginForm">
+      <label for="id">ID</label>
+      <input type="text" id="id" name="id" required>
 
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
 
-          <button type="submit">로그인</button>
-        </form>
-      </div>
+      <button type="submit">로그인</button>
+    </form>
+  </div> <script>
+    document.getElementById('loginForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const id = document.getElementById('id').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id, password }),
+        });
+
+        if (response.status === 403) {
+          const result = await response.json();
+          console.log(result)
+          alert(result.message);  // 로그인 실패 시 받은 메시지를 alert로 표시
+        } else if (response.redirected) {
+          window.location.href = response.url;  // 로그인 성공 시 리디렉션
+        }
+      } catch (error) {
+        alert('로그인 중 오류가 발생했습니다.');
+        console.error(error);
+      }
+    });
+  </script>
     </body>
     </html>
   `);
 };
-  
 
 exports.login = (req, res, next) => {
   passport.authenticate('local', (authError, user, info) => {
@@ -81,7 +108,8 @@ exports.login = (req, res, next) => {
       return next(authError);
     }
     if (!user) {
-      return res.redirect(`/?error=${info.message}`);
+      // 로그인 실패 시 403 상태 코드와 함께 메시지 전송
+      return res.status(403).json({ message: info.message });
     }
     return req.login(user, (loginError) => {
       if (loginError) {
@@ -90,6 +118,5 @@ exports.login = (req, res, next) => {
       }
       return res.redirect('/console');
     });
-  })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
+  })(req, res, next);
 };
-

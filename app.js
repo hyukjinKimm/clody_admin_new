@@ -28,7 +28,8 @@ app.use(session({
   secret: process.env.COOKIE_SECRET,
   cookie: {
     httpOnly: true,
-    secure: false,
+    secure: false, // 보안 환경에서는 true로 설정
+    maxAge: 60 * 60 * 1000, // 1시간 (밀리초 단위)
   },
 }));
 app.use(passport.initialize());

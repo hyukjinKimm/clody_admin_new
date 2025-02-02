@@ -97,6 +97,8 @@ exports.consolePage = (req, res) => {
       <div>특정 유저 조회: select * from users where id=100;</div>
       <div>전체 일기 조회: select * from diaries;</div>
       <div>특정 유저의 일기 조회: select * from diaries where user_id=100</div>
+      <div>전체 답장 조회: select * from replies;</div>
+      <div>특정 유저의 답장 조회: select * from replies where user_id=100;</div>
       <button id="downloadButton" style="display: none;" onclick="downloadExcel()">엑셀 다운로드</button>
     </div>
     <div class="query-result" id="result"></div>
