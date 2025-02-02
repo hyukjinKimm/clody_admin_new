@@ -1,0 +1,52 @@
+# Node.js dependencies
+node_modules/
+
+# Log files
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint config directory
+.eslintcache
+
+# Build output
+dist/
+build/
+
+# IDE or editor files
+.vscode/
+.idea/
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Serverless framework files
+.serverless/
+
+# Next.js build output
+.next/
+
+# SvelteKit build output
+.svelte-kit/
+
+# TypeScript build output
+*.tsbuildinfo
+
+# Vercel deployment files
+.vercel/
+
+# Docker-related files
+.docker/
+
+# Jest temporary files
+jest-cache/
